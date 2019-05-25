@@ -1,6 +1,7 @@
 package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -46,6 +47,11 @@ public class TechJobs {
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
+
+                    // Sort the list before printing
+                    Collections.sort(results);
+
+                    // Now print!
                     for (String item : results) {
                         System.out.println(item);
                     }
@@ -61,7 +67,8 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    // System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -111,6 +118,24 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        //System.out.println("printJobs is not implemented yet");
+
+
+        for (HashMap <String,String> currentJob : someJobs) {
+            System.out.println("*****");
+            System.out.println("position type: " + currentJob.get("position type"));
+            System.out.println("name: " + currentJob.get("name"));
+            System.out.println("employer: " + currentJob.get("employer"));
+            System.out.println("location: " + currentJob.get("location"));
+            System.out.println("core competency: " + currentJob.get("core competency"));
+            System.out.println("*****");
+            System.out.println(" ");
+
+        }
+        System.out.println("===================================");
+        String x = "";
+        if (someJobs.size()!=1) x = "s";
+        System.out.println( String.format("%d job%s found.",someJobs.size(),x));
+
     }
 }

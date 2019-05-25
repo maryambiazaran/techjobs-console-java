@@ -74,9 +74,9 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -123,6 +123,33 @@ public class JobData {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {
+
+        // load data, if not already loaded
+        loadData();
+
+        // initialize an Arraylist of jobs
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        // Look at each row HashMap
+        for (HashMap<String, String> row : allJobs) {
+
+
+            // Look at each VALUE in the HashMap
+            columnSearch:
+            for (String value: row.values()) {
+                // Once one of the VALUEs contains the 'searchTerm', break out
+                // of the columnSearch and move on to the next job (row)
+                if (value.toLowerCase().contains(searchTerm.toLowerCase())) {
+                    jobs.add(row);
+                    break columnSearch;
+                }
+            }
+        }
+
+        return jobs;
     }
 
 }
